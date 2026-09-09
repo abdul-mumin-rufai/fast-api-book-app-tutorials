@@ -42,3 +42,14 @@ async def get_book_by_query(category: str):
             books_to_return.append(book)
 
     return books_to_return
+
+
+@app.get('/books/{author_name}/')
+async def get_book_by_query_and_author(author_name: str, category: str):
+    books_to_return = []
+    for book in BOOKS:
+        if book.get('author').casefold() == author_name.casefold() and \
+                book.get('category').casefold() == category.casefold():
+            books_to_return.append(book)
+
+    return books_to_return
