@@ -32,3 +32,13 @@ async def books(name: str):
         if book.get('name').casefold() == name.casefold():  # change to lower case letters because the url is lower
             # case
             return book
+
+
+@app.get('/books/')
+async def get_book_by_query(category: str):
+    books_to_return = []
+    for book in BOOKS:
+        if book.get('category').casefold() == category.casefold():
+            books_to_return.append(book)
+
+    return books_to_return
