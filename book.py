@@ -68,3 +68,11 @@ async def update_book(updated_book=Body()):
         if BOOKS[index].get('name').casefold() == updated_book.get('name').casefold():
             BOOKS[index] = updated_book
 
+
+# THE DELETE HTTPS REQUEST METHOD
+@app.delete('/books/delete_book/{name}')
+async def delete_book(name: str):
+    for index in range(len(BOOKS)):
+        if BOOKS[index].get('name').casefold() == name.casefold():
+            BOOKS.pop(index)
+            break
