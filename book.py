@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 
 app = FastAPI()
 
@@ -53,3 +53,9 @@ async def get_book_by_query_and_author(author_name: str, category: str):
             books_to_return.append(book)
 
     return books_to_return
+
+
+# THe POST HTTPS METHOD
+@app.post('/books/create_book')
+async def create_book(new_book=Body()):
+    BOOKS.append(new_book)
