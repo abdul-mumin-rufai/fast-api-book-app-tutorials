@@ -59,3 +59,12 @@ async def get_book_by_query_and_author(author_name: str, category: str):
 @app.post('/books/create_book')
 async def create_book(new_book=Body()):
     BOOKS.append(new_book)
+
+
+# THE PUT REQUEST METHOD
+@app.put('/books/update_book')
+async def update_book(updated_book=Body()):
+    for index in range(len(BOOKS)):
+        if BOOKS[index].get('name').casefold() == updated_book.get('name').casefold():
+            BOOKS[index] = updated_book
+
