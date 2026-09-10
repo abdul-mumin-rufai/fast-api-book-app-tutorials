@@ -25,6 +25,16 @@ async def books():
     return {'book': 'this is my favourite book'}
 
 
+@app.get('/books/byauthor/')
+async def get_book_by_author(name: str):
+    books_to_return = []
+    for book in BOOKS:
+        if book.get('name').casefold() == name.casefold():
+            books_to_return.append(book)
+
+    return books_to_return
+
+
 # dynamic params must come after the static params
 @app.get('/books/{name}')
 async def books(name: str):
@@ -50,6 +60,17 @@ async def get_book_by_query_and_author(author_name: str, category: str):
     for book in BOOKS:
         if book.get('author').casefold() == author_name.casefold() and \
                 book.get('category').casefold() == category.casefold():
+            books_to_return.append(book)
+
+    return books_to_return
+
+
+# assignment get all books from a author
+@app.get('/books/byauthor/{author_name}')
+async def get_book_by_author_name(author_name: str):
+    books_to_return = []
+    for book in BOOKS:
+        if book.get('author').casefold() == author_name.casefold():
             books_to_return.append(book)
 
     return books_to_return
