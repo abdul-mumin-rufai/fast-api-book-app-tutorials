@@ -29,6 +29,17 @@ class CreateBook(BaseModel):  # create book type
     description: str = Field(min_length=1, max_length=200)
     rating: int = Field(gt=0, lt=6)
 
+    model_config = {
+        'json_schema_extra': {
+            'example': {
+                'title': 'rufai and python',
+                'author': 'abdul-mumin rufai',
+                'description': 'i want to be a AI/ML engineer',
+                'rating': 5
+            }
+        }
+    }
+
 
 BOOKS = [
     Book(1, 'computer science', 'Abdul-Mumin', 'I love programming', 5),
