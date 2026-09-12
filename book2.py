@@ -53,15 +53,22 @@ BOOKS = [
 
 @app.get('/books')
 def get_all_books():
-    return BOOKS
+    return
+
+
+@app.get('/books/{book_id}')
+async def get_book_id(book_id: int):
+    for book in BOOKS:
+        if book.id == book_id:
+            return book
 
 
 @app.post('/books/create_book')
 async def add_book(new_book: CreateBook):
     book = Book(**new_book.dict())  # the ** is helping to create property value pairs in the dictionary
-    BOOKS.append(book_id(book))
+    BOOKS.append(is_book_id(book))
 
 
-def book_id(book: Book):
+def is_book_id(book: Book):
     book.id = 1 if len(BOOKS) == 0 else BOOKS[-1].id + 1
     return book
