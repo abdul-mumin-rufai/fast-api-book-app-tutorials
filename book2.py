@@ -1,5 +1,7 @@
-from fastapi import FastAPI, Body
-from pydantic import BaseModel
+from typing import Optional
+
+from fastapi import FastAPI
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
@@ -21,11 +23,11 @@ class Book:
 
 # pydantic is a data validation libray use to validate data during development
 class CreateBook(BaseModel):  # create book type
-    id: int
-    title: str
-    author: str
-    description: str
-    rating: int
+    id: Optional[int] = Field(description='ID not needed on creation', default=None)
+    title: str = Field(min_length=3)
+    author: str = Field(min_length=2)
+    description: str = Field(min_length=1, max_length=200)
+    rating: int = Field(gt=0, lt=6)
 
 
 BOOKS = [
@@ -46,4 +48,9 @@ def get_all_books():
 @app.post('/books/create_book')
 async def add_book(new_book: CreateBook):
     book = Book(**new_book.dict())  # the ** is helping to create property value pairs in the dictionary
-    BOOKS.append(book)
+    BOOKS.append(book_id(book))
+
+
+def book_id(book: Book):
+    book.id = 1 if len(BOOKS) == 0 else BOOKS[-1].id + 1
+    return book
